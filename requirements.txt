@@ -1,0 +1,17 @@
+matplotlib
+scikit-learn
+openai
+serpapi
+python-dotenv
+torch
+pyngrok
+dash
+dash-bootstrap-components
+kagglehub
+tqdm
+pillow
+torchvision
+gpt_utils
+api_utils
+resnet
+tenserflow

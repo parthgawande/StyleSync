@@ -1,101 +1,136 @@
-# Outfit Compatibility Prediction and Diagnosis with Multi-Layered Comparison Network
+# 👗 StyleSync: AI-Driven Personalized Outfit & Shopping Assistant
 
+StyleSync is an AI-powered fashion recommendation system that evaluates outfit compatibility, diagnoses mismatches, and suggests real-time shopping alternatives using SerpAPI.
 
-<div align=center>
-<img src="./exp/diagnosis.png" width="80%" height="80%" />
-</div>
+![System Architecture](./images/system_architecture.png)
+*Figure 1: High-level system architecture showing UI, model, diagnosis, and API layers*
 
-<div align=center>
-<img src="./exp/demo1.gif" width="80%" height="80%" />
-</div>
+---
 
-Paper: 
-**Outfit Compatibility Prediction and Diagnosis with Multi-Layered Comparison Network**
+## 🧠 Overview
 
-by Parth 
-Published at ACM MM 2019 in Nice, France.
+Fashion is subjective. Traditional recommendation engines struggle with outfit cohesion. StyleSync solves this by:
 
-[[Paper](https://dl.acm.org/doi/10.1145/3343031.3350909)] [[Arxiv](https://arxiv.org/abs/1907.11496)] [[Demo](https://outfit-diagnosis.herokuapp.com)]
+- Accepting **multiple item images**
+- Predicting **outfit compatibility score**
+- Diagnosing weak elements
+- Providing **smart improvements + shopping options**
 
-## Contents of this repository
+---
 
-* [mcn](./mcn): Main program source code
-* [data](./data): **Polyvore-T** datasets based on [Polyvore](https://github.com/xthan/polyvore-dataset).
-* [baselines](./baselines): Compared baselines in our experiment
-* [exp](./exp): Experiment details, scripts and results etc.
+## ✨ Key Features
 
-## Requirements
+✅ Visual and textual diagnosis  
+✅ Real-time web-based shopping suggestions  
+✅ Semantic outfit compatibility scoring  
+✅ Feedback loop for future personalization  
 
-Ubuntu 16.04, NVIDIA GTX 1080Ti (for batch size 16), python >= 3.5.2
+![UI Upload Screen](./images/ui_upload_outfit.png)
+*Figure 2: UI for uploading clothing items*
 
-```
-torch==1.0.1
-torchvision==0.2.1
-networkx==2.4
-opencv-python==4.2.0.32
-matplotlib==2.2.2
-scikit-learn==0.21.2
-```
+---
 
-## Usage
+## 🧾 Dataset
 
-1. Download the original [Polyvore](https://github.com/xthan/polyvore/) dataset, then unzip the file and put the `image` directory into `data` folders (or you can create a soft link for it).
+- 33,375 outfits from Maryland Polyvore Images Dataset  
+- 444,000+ item images across:
+  - Tops (Upper)
+  - Bottoms
+  - Shoes
+  - Bags
+  - Accessories  
+- Annotations available for category mapping and split strategy
 
-2. Train
+---
 
-   ```sh
-   cd mcn
-   python train.py
-   ```
+## 🧱 Architecture
 
-3. Evaluate
+![Multi-Level Comparison Workflow](./images/fitb_interface_example.png)
+*Figure 3: Feature extraction, pairwise similarity, scoring, and diagnosis using MCN*
 
-   ```
-   python evaluate.py
-   ```
+**Model:**  
+- ResNet-50 backbone  
+- Multi-layer comparison (Layers 1–4)  
+- Cosine similarity  
+- Binary Cross-Entropy Loss  
 
-4. Visualize outfit diagnosis
+---
 
-   ```
-   cd exp
-   python diagnosis.py
-   ```
+## 🧪 Diagnosis Examples
 
+### 🟠 Case 1: Shoe + Accessory Conflict  
+**Score Before:** 0.0001  
+**Fix:** Replace with boots and a casual accessory  
+**Score After:** 0.9692 ✅
 
-5. Automatically revise outfit
+| Before | After |
+|--------|-------|
+| ![Before](./images/case1_shoe_accessory_before.png) | ![After](./images/case1_shoe_accessory_after.png) |
 
-   ```
-   python revision.py
-   ```
+---
 
-## Prediction Performance
+### 🔵 Case 2: Bottom + Shoe Clash  
+**Score Before:** 0.2246  
+**Fix:** Printed skirt + casual boots  
+**Score After:** 0.9676 ✅
 
-Pretrained model weights can be found in the links. The train, validation and test split is provided in [data](./data/).
+| Before | After |
+|--------|-------|
+| ![Before](./images/case2_bottom_shoe_before.png) | ![After](./images/case2_bottom_shoe_after.png) |
 
-|                                                              |    AUC    |   FITB    |
-| :----------------------------------------------------------- | :-------: | :-------: |
-| Pooling                                                      |   88.35   |   57.28   |
-| Concatenation                                                |   83.40   |   52.91   |
-| Self-attention                                               |   79.65   |   48.60   |
-| [BiLSTM](https://drive.google.com/open?id=1WaUP0X-ytZ05HYzeHmdBSzT9gcjF1c46) |   74.82   |   46.02   |
-| [CSN](https://drive.google.com/open?id=1EYwtJBRMFxRDzQs7JNYQhp2TpRF2fw9r) |   84.90   |   57.06   |
-| [Ours](https://drive.google.com/open?id=1WAErKHDmDfamZQt90wAOC5Db04euIeIP) | **91.90** | **64.35** |
+---
 
-## Demo
+### 🟢 Case 3: Perfect Outfit  
+**Score:** 0.9999  
+**Diagnosis:** No conflict detected — stylistically perfect
 
-A demo application is in the [app](./app) directioy. You can run it locally by go to [app](./app) directory then use command ``python main.py``.
+![Perfect Outfit](./images/case3_perfect_outfit.png)
+*Figure 4: Naturally compatible outfit with no recommended changes*
 
-More guide can be found in [here](./app/README.md).
+---
 
-## Cite
+## 🛍️ Smart Shopping Suggestions
 
-Please cite our paper if you use or refer this code:
+StyleSync uses **SerpAPI** to find real-world product recommendations.
 
-```
-@inproceedings{wang2019diagnosis,
-  title={Outfit Compatibility Prediction and Diagnosis with Multi-Layered Comparison Network},
-  author={Xin Wang, Bo Wu and Yueqi Zhong},
-  booktitle={ACM International Conference on Multimedia},
-  year={2019}
-}
-```
+![Web Suggestions](./images/ui_web_suggestions.png)
+*Figure 5: Web-based product recommendations (image, title, link)*
+
+---
+
+## 🧑‍💻 User Interface
+
+- Upload images → check compatibility → improve outfit → shop instantly
+- Intuitive Dash interface
+
+![Diagnosis Output](./images/ui_diagnosis_output.png)
+*Figure 6: Diagnosis view showing low-score outfit and improvement options*
+
+---
+
+## 🔭 Future Work
+
+- GPT-4-based free-text outfit suggestions  
+- Smart occasion-based filtering (e.g., wedding, brunch)  
+- Personalized fine-tuned LLMs  
+- Feedback-powered active learning  
+- Multimodal matching using tags + reviews  
+
+---
+
+## 👤 Author
+
+**Parth Keyur Gawande**  
+🎓 RIT | MS Data Science  
+🔗 [LinkedIn](https://www.linkedin.com/in/parthgawande)  
+🌐 [Portfolio](https://parthgawande.github.io/Portfolio)
+
+---
+
+## 📜 License
+
+MIT License — free to use with credit.
+
+---
+
+## ⭐ Star the project if you found it useful!

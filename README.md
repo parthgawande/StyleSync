@@ -1,146 +1,129 @@
 # 👗 StyleSync: AI-Driven Personalized Outfit & Shopping Assistant
 
-StyleSync is an AI-powered fashion recommendation system that analyzes outfit combinations for compatibility, identifies mismatches, and suggests real-time shopping alternatives using SerpAPI. Built as a Capstone Project for the MS in Information Technology & Analytics at RIT, StyleSync blends computer vision, data science, and API integration into a unified smart wardrobe assistant.
+**StyleSync** is a fashion intelligence platform that predicts outfit compatibility, diagnoses mismatches, and recommends real-time shopping alternatives. Developed as a Capstone Project for the MS in Information Technology & Analytics at RIT, it combines computer vision, feature comparison, and API integrations to deliver personalized styling support.
 
 ---
 
-![Architecture](./screenshots/system_architecture.png)  
-*Figure 1: Complete architecture overview — from user inputs to recommendations*
+![System Architecture](./screenshots/system_architecture.png)  
+*Figure 1: End-to-end system pipeline including model, diagnosis, and UI layers*
 
 ---
 
-## 🔍 Problem Statement
+## 🧩 Problem Statement
 
-Outfit matching is inherently subjective and lacks structured computational guidance. Many existing systems recommend individual clothing items but fail to assess **overall outfit compatibility**. StyleSync bridges this gap by:
+While many fashion platforms suggest individual clothing items, few assess how well they go together. StyleSync addresses this by:
 
-- Accepting **user-uploaded images**
-- Analyzing **outfit combinations**
-- Diagnosing **incompatible items**
-- Suggesting **smart replacements**
-- Recommending **real-time shopping options**
-
----
-
-## 🧠 Core Features
-
-✅ Upload outfits as images  
-✅ Predict outfit compatibility score  
-✅ Perform diagnosis with explanations  
-✅ Suggest improvements from trained knowledge  
-✅ Retrieve live product alternatives via **SerpAPI**  
-✅ View all recommendations on a dynamic UI  
+- Taking **multiple clothing item images**
+- Evaluating **outfit compatibility**
+- Identifying **mismatched elements**
+- Recommending **better alternatives**
+- Linking users to **live shopping options**
 
 ---
 
-## 📁 Dataset Overview
+## 🚀 Key Features
 
-We used the **Maryland Polyvore Images Dataset**, consisting of:
-
-- 📦 33,375 labeled outfits  
-- 🖼️ 444,000+ individual item images  
-- 🧵 Categories: Tops, Bottoms, Shoes, Accessories, Bags  
-- 📘 JSON annotation files for compatibility, item IDs, and FITB task  
-
-Category mapping and subsetting were performed for GPU-efficient training.
+- ✅ Upload outfits (tops, bottoms, shoes, accessories)
+- 🧠 Predict visual compatibility scores
+- 📉 Diagnose mismatches with explanations
+- 🛍️ Recommend better items using SerpAPI
+- 🖥️ View results via a clean Dash interface
 
 ---
 
-## 🧱 System Architecture
+## 📦 Dataset Summary
 
-![Model Workflow](./screenshots/mcn_architecture.png)  
-*Figure 2: ResNet-50 backbone with Multi-Layer Comparison Network (MCN)*
+We use the **Maryland Polyvore Images Dataset**, containing:
 
-**Key Components:**
-
-- 🔍 **Feature Extraction:** ResNet-50 pretrained on ImageNet  
-- 🧠 **Compatibility Prediction:** Cosine similarity + Binary Cross-Entropy Loss  
-- 🔁 **Comparison Model:** Multi-layered pairwise item feature matching  
-- 🔄 **Diagnosis Engine:** Gradient-based analysis of contribution scores  
-- 🔗 **SerpAPI Engine:** Retrieves real-time web suggestions  
+- 33,375 full outfits  
+- Over 444,000 item-level images  
+- Categories: Tops, Bottoms, Shoes, Bags, Accessories  
+- JSON annotations for compatibility and FITB (Fill-in-the-Blank) training
 
 ---
 
-## 📊 Performance Metrics
+## 🏗️ Architecture
 
-- ✅ 91.2% prediction accuracy on compatible vs incompatible outfit classification  
-- 🔍 Mean Average Precision (mAP): **0.77**  
-- 🧪 Used Cosine Similarity for final inference and diagnosis scoring  
+![Model Architecture](./screenshots/mcn_architecture.png)  
+*Figure 2: ResNet-50 + Multi-Layer Comparison Network (MCN) used for compatibility scoring*
+
+### Modules Used
+
+- **Feature Extractor:** ResNet-50  
+- **Pairwise Similarity:** Layered comparison using cosine distance  
+- **Diagnosis:** Gradient-based contribution mapping  
+- **Inference Engine:** Cosine similarity scoring for all pairs  
+- **Web Search:** Real-time shopping via SerpAPI
+
+---
+
+## 📊 Model Performance
+
+- ✅ **91.2%** compatibility classification accuracy  
+- 📈 **Mean Average Precision (mAP):** 0.77  
+- 🧪 Binary Cross-Entropy Loss, balanced sampling for training
 
 ---
 
 ## 🧪 Diagnosis Case Studies
 
-### 🟠 Conflict Detected: Shoes + Accessories  
-- **Before Score:** 0.0001  
-- **Fix:** Swap shoes + accessories  
-- **After Score:** 0.9692 ✅  
-
+### Case 1: Shoes + Accessories Conflict  
+**Score Before:** 0.0001 → **After Fix:** 0.9692 ✅  
 | Before | After |
 |--------|-------|
 | ![Before](./screenshots/case1_before.png) | ![After](./screenshots/case1_after.png) |
 
 ---
 
-### 🔵 Conflict Detected: Bottom + Shoes  
-- **Before Score:** 0.2246  
-- **Fix:** Replace bottom with print skirt  
-- **After Score:** 0.9676 ✅  
-
+### Case 2: Bottom + Shoes Clash  
+**Score Before:** 0.2246 → **After Fix:** 0.9676 ✅  
 | Before | After |
 |--------|-------|
 | ![Before](./screenshots/case2_before.png) | ![After](./screenshots/case2_after.png) |
 
 ---
 
-### 🟢 No Conflict Detected: Compatible Outfit  
-- **Score:** 0.9999  
-- **Action:** No changes suggested  
-
-![Perfect Outfit](./screenshots/perfect_outfit.png)  
-*Figure 3: Example of a naturally compatible outfit*
+### Case 3: Perfect Outfit  
+**Score:** 0.9999 – No changes required  
+![Perfect](./screenshots/perfect_outfit.png)
 
 ---
 
 ## 🧑‍💻 User Interface
 
-StyleSync is powered by a **Dash** interface for simplicity:
+The Dash-powered UI allows users to:
 
-- Step 1: Upload images (Top, Bottom, Shoes, Accessories)  
-- Step 2: Click 'Check Compatibility'  
-- Step 3: View Score + Diagnosis  
-- Step 4: Get Smart Recommendations  
+1. Upload clothing images  
+2. Click “Check Compatibility”  
+3. View score + improvement suggestions  
+4. See smart product alternatives  
 
-![UI Upload](./screenshots/ui_upload.png)  
-*Figure 4: Upload images screen*
-
-![UI Diagnosis](./screenshots/ui_diagnosis.png)  
-*Figure 5: Real-time diagnosis output*
-
-![Web Suggestions](./screenshots/web_recommendations.png)  
-*Figure 6: Product search using SerpAPI*
+![Upload Screen](./screenshots/ui_upload.png)  
+![Diagnosis Output](./screenshots/ui_diagnosis.png)  
+![Web Recommendations](./screenshots/web_recommendations.png)
 
 ---
 
-## 🛍️ SerpAPI Integration
+## 🌐 SerpAPI Integration
 
-- 🔎 Extracts item categories from diagnosis
-- 🌐 Queries real-world products from the web
-- 📸 Shows images, titles, and direct shopping links
-- 🤖 Personalized suggestions for better match
+- 🔍 Extracts category-level issues
+- 🌐 Queries real-time shopping items
+- 🛒 Shows results with product names, images, and links
+- 🤖 Optimized for quick fashion replacement options
 
 ---
 
-## 🚀 How to Run Locally
+## 🧰 Run StyleSync Locally
 
 ```bash
 git clone https://github.com/parthgawande/StyleSync
 cd StyleSync
 
-# Install required dependencies
+# Install dependencies
 pip install -r requirements.txt
 
-# Set up SerpAPI key
-export SERPAPI_API_KEY=your_api_key_here
+# Set your SerpAPI key
+export SERPAPI_API_KEY=your_key_here
 
 # Launch the app
 python app/main.py

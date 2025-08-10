@@ -88,8 +88,7 @@ Shopping suggestions are generated in real-time using SerpAPI.
 
 You can find **in-depth details** about the dataset, methodology, experiments, and results in the following files (included in this repo):
 
-- 📄 [Project Report (PDF)](Project%20Report.pdf)  
-- 📊 [Final Presentation (PPTX)](FInal%20StyleSync.pptx)
+- 📄 [Project Report (PDF)](deliverables/Project%20Report.pdf)
 
 These documents cover **model architecture, training process, evaluation metrics, case studies, and UI workflows** in much more detail than the README.
 

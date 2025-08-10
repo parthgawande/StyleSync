@@ -86,7 +86,7 @@ Shopping suggestions are generated in real-time using SerpAPI.
 
 ## 📑 Detailed Documentation
 
-You can find **in-depth details** about the dataset, methodology, experiments, and results in the following files:
+You can find **in-depth details** about the dataset, methodology, experiments, and results in the following files (included in this repo):
 
 - 📄 [Project Report (PDF)](Project%20Report.pdf)  
 - 📊 [Final Presentation (PPTX)](FInal%20StyleSync.pptx)
@@ -95,9 +95,20 @@ These documents cover **model architecture, training process, evaluation metrics
 
 ---
 
-## 📥 Installation
+## 📥 Installation & Running
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/<your-username>/StyleSync.git
-   cd StyleSync
+Follow these steps to set up and run StyleSync locally.
+
+### 1️⃣ Clone the Repository
+```bash
+git clone https://github.com/<your-username>/StyleSync.git
+cd StyleSync
+python -m venv venv
+source venv/bin/activate   # Mac/Linux
+venv\Scripts\activate      # Windows
+
+pip install -r requirements.txt
+SERPAPI_KEY=your_serpapi_key
+NGROK_AUTHTOKEN=your_ngrok_authtoken
+python app/ngrok.py
+python app/main.py
